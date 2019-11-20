@@ -1,0 +1,2 @@
+--insert into users(id, first_Name, last_Name, email,disabled,salary) values(2,'Rod','rty', 'rod@gmail.com', false,15.45);
+--insert into users(id, first_Name, last_Name, email,disabled,salary) values(3,'Becky','asd', 'becky@gmail.com', true,18.45);
