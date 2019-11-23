@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,8 @@ import com.sureshtech.springbootjpa.repository.UserRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class SpringbootJpaApplicationTests {
+	
+	Logger log = LoggerFactory.getLogger(SpringbootJpaApplicationTests.class);
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -44,7 +48,9 @@ class SpringbootJpaApplicationTests {
 		user.setSalary(1200d);
 		
 		user = userRepository.save(user);
-		System.out.println(user.getId());
+		
+		log.info(user.getId()+"");
+		
 		assertNotNull(user.getId());
 		assertEquals("abc", user.getFirstName());
 		
@@ -83,7 +89,7 @@ class SpringbootJpaApplicationTests {
 	public void findByUserNameLike() {
 		List<User> users = userRepository.findByFirstNameLike("Naresh");
 		assertNotNull(users);
-		assertEquals(3, users.size());
+		assertEquals(2, users.size());
 	}
 	
 	@Test
@@ -119,21 +125,27 @@ class SpringbootJpaApplicationTests {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(order));
 		
 		Page<User> userPage =  userRepository.findAll(pageable);
-		System.out.println(userPage.getSize());
 		
-		System.out.println("Slice Number : " + userPage.getNumber());
+		log.info("userPage size :"+userPage.getSize() +"");
 		
-		System.out.println("NumberOfElements : " + userPage.getNumberOfElements());
+		log.info("Slice Number : " + userPage.getNumber());
 		
-		System.out.println("Slice Number : " + userPage.getSize());
+		log.info("NumberOfElements : " + userPage.getNumberOfElements());
 		
-		System.out.println("Total Pages : " + userPage.getTotalPages());
+		log.info("Slice Number : " + userPage.getSize());
 		
-		//System.out.println("Slice Number : " + userPage.getNumber());
+		log.info("Total Pages : " + userPage.getTotalPages());	
+		
 		
 		for (User user : userPage) {
-			System.out.println(user.getId() +" : "+ user.getFirstName());
+			log.info(user.getId() +" : "+ user.getFirstName());
 		}
 		assertEquals(2,userPage.getSize());
+	}
+	
+	@Test
+	public void seearchByLastName() {
+		 List<User> users = userRepository.searchByLastName("bc");
+		 assertEquals(2, users.size());
 	}
 }
