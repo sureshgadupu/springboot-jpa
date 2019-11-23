@@ -11,8 +11,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	public List<User> findByFirstName(String firstName);
 	
-	@Query("select u from User u where u.firstName like %:firstName%")
+	
 	public List<User> findByFirstNameLike(String firstName);
+	
+	@Query("select u from User u where u.lastName like %:lasttName%")
+	public List<User> searchByLastName(String lasttName);
 	
 
 }
